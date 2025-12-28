@@ -30,14 +30,7 @@ ENV HF_HOME=/models
 
 ```
 
-## Step 2:
-
-```
-pip install --upgrade pip
-pip install vllm transformers accelerate safetensors
-```
-
-## Step 3:
+## Step 2: VLL serve
 
 * more info about `Qwen3-VL-2B-Instruct` on huggingface [link](https://huggingface.co/Qwen/Qwen3-VL-2B-Instruct)
 
@@ -48,7 +41,7 @@ vllm serve Qwen/Qwen3-VL-2B-Instruct \
   --gpu-memory-utilization 0.9
 ```
 
-## Step 4: Python client code to interact with the OpenAI-compatible API
+## Step 3: Python client code to interact with the OpenAI-compatible API
 
 ```
 from openai import OpenAI
