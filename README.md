@@ -2,7 +2,7 @@
 
 This project demonstrates a **client–server ML inference** setup where a large language model is hosted on a dedicated GPU machine and accessed remotely from a client laptop. The model is deployed using **containerized deployment** via Docker and served through vLLM, enabling efficient **remote GPU inference** without requiring the client machine to have GPU resources. The vLLM server exposes **OpenAI-compatible inference APIs**, allowing standard OpenAI SDKs to be used for communication, making the system easy to integrate into existing applications and workflows.
 
-huggingface token (qwen test): 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
+huggingface token (qwen test): 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
 
 ## Step 0: Verifying GPU access from Docker
 
