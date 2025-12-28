@@ -8,14 +8,26 @@ This project demonstrates a **client–server ML inference** setup where a large
 docker run --rm --gpus all nvidia/cuda:12.2.0-runtime-ubuntu22.04 nvidia-smi
 ```
 
-## Step 1: Run a CUDA-enabled container
+## Step 1: Build a reusable Docker image (Dockerfile)
+
+### Step 1.1: Build a vLLM Docker image
 
 ```
-docker run --rm --gpus all -it \
-  --name qwen3-vl-container \
-  -p 8000:8000 \
-  pytorch/pytorch:2.1.0-cuda12.1-cudnn8-runtime \
-  /bin/bash
+docker build -t qwen-vllm .
+```
+
+### Step 1.2: Example Dockerfile 
+
+```
+FROM pytorch/pytorch:2.1.0-cuda12.1-cudnn8-runtime
+
+WORKDIR /workspace
+
+RUN pip install --upgrade pip && \
+    pip install vllm transformers accelerate safetensors
+
+ENV HF_HOME=/models
+
 ```
 
 ## Step 2:
