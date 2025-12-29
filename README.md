@@ -59,7 +59,7 @@ Keywords: docker build image, docker build -t tagname
 Run the container and map port 8000:
 
 ```
-docker run --gpus all -p 8000:8000 --name qwen-vllm-container qwen-vllm:latest
+docker run -it --gpus all -p 8000:8000 qwen-vllm:latest
 ```
 
 * --gpus all ensures GPU usage (if available)
@@ -70,10 +70,10 @@ Keywords: docker run container, docker run port mapping, docker run with gpus
 
 Tip: Use docker ps to check running containers.
 
-If you want to run a tempoaray container:
+If you want to run a temporary container:
 
 ```
-docker run --rm --gpus all -p 8000:8000 qwen-vllm:latest
+docker run --rm -it --gpus all -p 8000:8000 qwen-vllm:latest
 ```
 
 # Step 4: Test the Server
