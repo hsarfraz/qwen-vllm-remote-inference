@@ -70,6 +70,12 @@ Keywords: docker run container, docker run port mapping, docker run with gpus
 
 Tip: Use docker ps to check running containers.
 
+If you want to run a tempoaray container:
+
+```
+docker run --rm --gpus all -p 8000:8000 qwen-vllm:latest
+```
+
 # Step 4: Test the Server
 
 Ping the server to ensure it’s running:
@@ -110,65 +116,4 @@ data = {
 
 response = requests.post(url, json=data)
 print(response.json()["choices"][0]["text"])
-```
-
-## Step 0: Verifying GPU access from Docker
-
-```
-docker run --rm --gpus all nvidia/cuda:12.2.0-runtime-ubuntu22.04 nvidia-smi
-```
-
-## Step 1: Build a reusable Docker image (Dockerfile)
-
-### Step 1.1: Build a vLLM Docker image
-
-```
-docker build -t qwen-vllm .
-```
-
-### Step 1.2: Example Dockerfile 
-
-```
-FROM pytorch/pytorch:2.1.0-cuda12.1-cudnn8-runtime
-
-WORKDIR /workspace
-
-RUN pip install --upgrade pip && \
-    pip install vllm transformers accelerate safetensors
-
-ENV HF_HOME=/models
-
-```
-
-## Step 2: VLL serve
-
-* more info about `Qwen3-VL-2B-Instruct` on huggingface [link](https://huggingface.co/Qwen/Qwen3-VL-2B-Instruct)
-
-```
-vllm serve Qwen/Qwen3-VL-2B-Instruct \
-  --port 8000 \
-  --max-model-len 139200 \
-  --gpu-memory-utilization 0.9
-```
-
-## Step 3: Python client code to interact with the OpenAI-compatible API
-
-```
-from openai import OpenAI
-
-client = OpenAI(
-    base_url="http://<GPU_MACHINE_IP>:8000/v1",
-    api_key="EMPTY"
-)
-
-response = client.chat.completions.create(
-    model="Qwen/Qwen3-VL-2B-Instruct",
-    messages=[
-        {"role": "user", "content": "Explain Docker in simple terms"}
-    ],
-    max_tokens=500,
-    temperature=0.7
-)
-
-print(response.choices[0].message.content)
 ```
